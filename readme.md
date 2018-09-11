@@ -6,4 +6,6 @@ Right now, it's working for 2 or 1 user, which is already pretty good, but it's 
 exactly what the script is waiting for (int, strings...)
 Im using Jinja2 for the templates.
 
+The path of the file in this repository is not good.
+
 ### I would like to add a GUI so it's easier for my support team to uses it.
