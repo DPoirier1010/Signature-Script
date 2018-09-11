@@ -106,7 +106,7 @@ while(nmbrAsst > 0):
 #telAdj = input('telephone of the second person :')
 #celAdj = input('cell of the second person :  ')
 #emailAdj = input('email of the second person :')
-#address = input('Copy paste the address')
+address = input('Copy paste the address')
 
 #tel = logoTel + cssVar + tel + cssVar2 + '<br>'
 #fax = logoFax + cssVar + fax + cssVar2 + '<br>'
