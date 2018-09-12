@@ -25,8 +25,9 @@ logoCell2 = logoCell
 language = input('Choose between fr, eng or bil :')
 nmbrAsst = input('How many person?     : ')
 nmbrAsst = int(nmbrAsst)
-flag = 0
 
+personnes = []
+templateModel = 'templateLoop.html'
 #templateChoice = input('Assistant? y or n')
 
 #if templateChoice in ['y', 'Y']:
@@ -34,6 +35,7 @@ flag = 0
 
 #else:
 #   templateModel = 'template.html'
+
 
 if language in ['fr', 'Fr', 'fR', 'FR']:
     lang = logoFr
@@ -44,7 +46,7 @@ elif language in ['ang', 'ANG', 'Ang']:
 elif language in ['bil', 'BIL', 'Bil']:
     lang = logoBil
 
-class personne:
+class Rep:
     def __init__(self, nom, titre, titre2, tel, fax, cell, email):
         self.nom = nom
         self.titre = titre
@@ -64,6 +66,11 @@ while(nmbrAsst > 0):
     cell = input('cell number of the Person : ')
     email = input('email of the Person : ')
     
+    ##### Rajoute les attributs
+    nom = cssVar + nom + cssVar2
+    titre = cssVar + titre + cssVar2
+    titre2 = cssVar + titre + cssVar2
+
     if tel == '':
         tel = ''
     else:
@@ -78,8 +85,10 @@ while(nmbrAsst > 0):
         cell = ''
     else:
         cell = logoCell + cssVar + cell + cssVar2 + '<br>'
+    
+    p1 = Rep(nom,titre,titre2,tel,fax,cell,email)
+    personnes.append(p1)
 
-    person[flag] = personne(nom,titre, titre2, tel, fax, cell, email)
 
 #### if else statement pour savoir si il faut print la ligne ou pas.. Un peu cabochon
 
@@ -118,9 +127,7 @@ file_loader = FileSystemLoader('template')
 env = Environment(loader=file_loader)
 template = env.get_template(templateModel)
 output = template.render(nom=nom, titre=titre, titre2=titre2, tel=tel,
-                         fax=fax, cell=cell, email=email, nom2=nom2,
-                         titreAdj=titreAdj, telAdj=telAdj, celAdj=celAdj,
-                         emailAdj=emailAdj, address=address, lang=lang,
+                         fax=fax, cell=cell, email=email, address=address, lang=lang,
                          logoTel=logoTel, logoTel2=logoTel2, logoFax=logoFax, logoCell=logoCell,
                          logoCell2=logoCell2)
 
@@ -130,6 +137,7 @@ file = io.open('test.html', mode='w', encoding="utf-8")
 file.write(output)
 
 file.close()
+
 
 
 # il faudrait aussi ajouter une option pour le nombre d'assistant ++
