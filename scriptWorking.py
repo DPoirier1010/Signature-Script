@@ -1,7 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 import io
 
-
 # Set the path to the appropriate URL
 logoAng1 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
 logoAng2 = '523'
@@ -22,18 +21,19 @@ logoCell = '<span lang=\"FR-CA\" style=\"font-size: 9pt; font-family: Webdings; 
 logoTel2 = logoTel
 logoCell2 = logoCell
 
+
+# Il faudrait avoir une logique que si j'ai besoin du logo, je le print, sinon rien.
+# ajouter les escapes characters pour les logos
+
+
 language = input('Choose between fr, eng or bil :')
-nmbrAsst = input('How many person?     : ')
-nmbrAsst = int(nmbrAsst)
-flag = 0
+templateChoice = input('Assistant? y or n')
 
-#templateChoice = input('Assistant? y or n')
+if templateChoice in ['y', 'Y']:
+    templateModel = 'templateAssistant.html'
 
-#if templateChoice in ['y', 'Y']:
-#    templateModel = 'templateAssistant.html'
-
-#else:
-#   templateModel = 'template.html'
+else:
+    templateModel = 'template.html'
 
 if language in ['fr', 'Fr', 'fR', 'FR']:
     lang = logoFr
@@ -44,75 +44,58 @@ elif language in ['ang', 'ANG', 'Ang']:
 elif language in ['bil', 'BIL', 'Bil']:
     lang = logoBil
 
-class personne:
-    def __init__(self, nom, titre, titre2, tel, fax, cell, email):
-        self.nom = nom
-        self.titre = titre
-        self.titre2 = titre2
-        self.tel = tel
-        self.fax = fax
-        self.cell = cell
-        self.email = email
 
-while(nmbrAsst > 0):
-    nmbrAsst = nmbrAsst - 1
-    nom = input('name of the Person :')
-    titre = input('title of the person : ')
-    titre2 = input('second title of the Person :')
-    tel = input('telephone number of the Person :')
-    fax = input('fax number of the Person : ')
-    cell = input('cell number of the Person : ')
-    email = input('email of the Person : ')
-    
-    if tel == '':
-        tel = ''
-    else:
-        tel = logoTel + cssVar + tel + cssVar2 + '<br>'
+nom = input('name of the Person :')
+titre = input('title of the person : ')
+# make this null if nothing is entered
+titre2 = input('second title of the Person :')
+tel = input('telephone number of the Person :')
+# we might not need it, so if it's not used, don't output it
+fax = input('fax number of the Person : ')
+cell = input('cell number of the Person : ')
+email = input('email of the Person : ')
+nom2 = input('name of the second person  :')
+titreAdj = input('title of person 2 :')
+telAdj = input('telephone of the second person :')
+celAdj = input('cell of the second person :  ')
+emailAdj = input('email of the second person :')
+address = input('Copy paste the address')
 
-    if fax == '':
-        fax = ''
-    else:
-        fax = logoFax + cssVar + fax + cssVar2 + '<br>'
 
-    if cell == '':
-        cell = ''
-    else:
-        cell = logoCell + cssVar + cell + cssVar2 + '<br>'
 
-    person[flag] = personne(nom,titre, titre2, tel, fax, cell, email)
+
 
 #### if else statement pour savoir si il faut print la ligne ou pas.. Un peu cabochon
+if tel == '':
+    tel = ''
+else:
+    tel = logoTel + cssVar + tel + cssVar2 + '<br>'
 
+if fax == '':
+    fax = ''
+else:
+    fax = logoFax + cssVar + fax + cssVar2 + '<br>'
 
-#if telAdj == '':
-#    telAdj = ''
-#else:
-#    telAdj = logoTel + cssVar + telAdj + cssVar2 + '<br>'
-#
-#if celAdj == '':
-#    celAdj = ''
-#else:
-#    celAdj = logoCell + cssVar + celAdj + cssVar2 + '<br>'
+if cell == '':
+    cell = ''
+else:
+    cell = logoCell + cssVar + cell + cssVar2 + '<br>'
 
-#nom = input('name of the Person :')
-#titre = input('title of the person : ')
-# make this null if nothing is entered
-#titre2 = input('second title of the Person :')
-#tel = input('telephone number of the Person :')
-# we might not need it, so if it's not used, don't output it
-#fax = input('fax number of the Person : ')
-#cell = input('cell number of the Person : ')
-#email = input('email of the Person : ')
-#nom2 = input('name of the second person  :')
-#titreAdj = input('title of person 2 :')
-#telAdj = input('telephone of the second person :')
-#celAdj = input('cell of the second person :  ')
-#emailAdj = input('email of the second person :')
-address = input('Copy paste the address')
+if telAdj == '':
+    telAdj = ''
+else:
+    telAdj = logoTel + cssVar + telAdj + cssVar2 + '<br>'
+
+if celAdj == '':
+    celAdj = ''
+else:
+    celAdj = logoCell + cssVar + celAdj + cssVar2 + '<br>'
+###TEST
 
 #tel = logoTel + cssVar + tel + cssVar2 + '<br>'
 #fax = logoFax + cssVar + fax + cssVar2 + '<br>'
 #cell = logoCell + cssVar + cell + cssVar2 + '<br>'
+
 
 file_loader = FileSystemLoader('template')
 env = Environment(loader=file_loader)
