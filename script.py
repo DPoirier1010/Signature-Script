@@ -1,6 +1,9 @@
 from jinja2 import Environment, FileSystemLoader
+import os
+import cherrypy
 import io
 
+#Author : DPoirier
 
 # Set the path to the appropriate URL
 logoAng1 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
@@ -13,8 +16,12 @@ lang = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
 
 cssVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif;color:rgb(0,50,78)\">'
 cssVar2 = '</span>'
+#<span lang="FR-CA" style="font-size:8pt;font-family:Verdana,sans-serif"><a href="mailto:{{  emailAdj }} "
+#                                   style="color:purple">{{ emailAdj }}</a></span>
 
-
+emailVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif\"><a href=\"mailto:\"'
+emailVar2 = '\"style=\"color:purple\">'
+emailVar3 = '</a></span>'
 # add escape char
 logoTel = '<span style=\"font-size: 9pt; font-family: Wingdings; color: rgb(0, 50, 78);\">(</span>'
 logoFax = '<span lang=\"FR-CA" style=\"font-size: 9pt; font-family: \'Wingdings 2\'; color: rgb(0, 50, 78);\">6</span>'
@@ -25,11 +32,15 @@ logoCell2 = logoCell
 language = input('Choose between fr, eng or bil :')
 nmbrAsst = input('How many person?     : ')
 nmbrAsst = int(nmbrAsst)
-
+flag = nmbrAsst
+nomConf = input('The name of the person In the conf')
+people = {}
 #templateChoice = input('Assistant? y or n')
 
 #if templateChoice in ['y', 'Y']:
-#    templateModel = 'templateAssistant.html'
+templateModel = 'templateLoop.html'
+
+myList = []
 
 #else:
 #   templateModel = 'template.html'
@@ -53,8 +64,16 @@ class personne:
         self.cell = cell
         self.email = email
 
-while(nmbrAsst > 0):
-    nmbrAsst = nmbrAsst - 1
+    def __str__(self):
+        return str(self.__class__) + ": " + str(self.__dict__)
+
+
+
+    
+
+
+for i in range(0, nmbrAsst):
+    
     nom = input('name of the Person :')
     titre = input('title of the person : ')
     titre2 = input('second title of the Person :')
@@ -62,11 +81,20 @@ while(nmbrAsst > 0):
     fax = input('fax number of the Person : ')
     cell = input('cell number of the Person : ')
     email = input('email of the Person : ')
+
+    nom = '<b>' + cssVar + nom + cssVar2 + '</b>' + '<br>'
+    titre = cssVar + titre + cssVar2 + '<br>'
+    email = emailVar + email + emailVar2 + email + emailVar3 + '<br>' + '<br>'
     
+    if titre2 == '':
+        titre2 = ''  
+    else:
+        titre2 = cssVar + titre2 + cssVar2 + '<br>'
+
     if tel == '':
         tel = ''
     else:
-        tel = logoTel + cssVar + tel + cssVar2 + '<br>'
+        tel = '<br>' + logoTel + cssVar + tel + cssVar2 + '<br>'
 
     if fax == '':
         fax = ''
@@ -78,7 +106,36 @@ while(nmbrAsst > 0):
     else:
         cell = logoCell + cssVar + cell + cssVar2 + '<br>'
 
-    personne(nom,titre, titre2, tel, fax, cell, email)
+    tempPerson = personne(nom, titre, titre2, tel, fax, cell, email)
+
+    myList.insert(i,tempPerson)
+
+
+   
+
+
+    nmbrAsst = nmbrAsst - 1 
+    #inst = {'nom' : nom, 'titre' : titre, 'titre2' : titre2,'tel' : tel, 'fax' : fax, 'cell' : cell, 'email' : email}
+
+htmlMaster = ''
+for y in myList:
+    #dataList.insert(myList[y].nom)
+    #dataList.insert(myList[y].titre)
+    #dataList.insert(myList[y].titre2)
+    #dataList.insert(myList[y].tel)
+    #dataList.insert(myList[y].fax)
+    #dataList.insert(myList[y].cell)
+    #dataList.insert(myList[y].email)
+    htmlBlock = ''
+    htmlBlock = y.nom
+    htmlBlock = htmlBlock + y.titre
+    htmlBlock = htmlBlock + y.titre2
+    htmlBlock = htmlBlock + y.tel
+    htmlBlock = htmlBlock + y.fax
+    htmlBlock = htmlBlock + y.cell
+    htmlBlock = htmlBlock + y.email
+    htmlMaster = htmlMaster +htmlBlock
+
 #### if else statement pour savoir si il faut print la ligne ou pas.. Un peu cabochon
 
 
@@ -107,29 +164,31 @@ while(nmbrAsst > 0):
 #celAdj = input('cell of the second person :  ')
 #emailAdj = input('email of the second person :')
 address = input('Copy paste the address')
+address2 = input('second line of address')
+address3 = input('third')
+address4 = input('fourth')
 
 #tel = logoTel + cssVar + tel + cssVar2 + '<br>'
 #fax = logoFax + cssVar + fax + cssVar2 + '<br>'
 #cell = logoCell + cssVar + cell + cssVar2 + '<br>'
+def get_myList(self):
+    return myList
 
 file_loader = FileSystemLoader('template')
 env = Environment(loader=file_loader)
 template = env.get_template(templateModel)
 output = template.render(nom=nom, titre=titre, titre2=titre2, tel=tel,
-                         fax=fax, cell=cell, email=email, nom2=nom2,
-                         titreAdj=titreAdj, telAdj=telAdj, celAdj=celAdj,
-                         emailAdj=emailAdj, address=address, lang=lang,
+                         fax=fax, cell=cell, email=email,address=address, lang=lang,
                          logoTel=logoTel, logoTel2=logoTel2, logoFax=logoFax, logoCell=logoCell,
-                         logoCell2=logoCell2)
+                         logoCell2=logoCell2,nomConf=nomConf,flag=flag, htmlMaster = htmlMaster, address2=address2,address3=address3,address4=address4)
+
+
 
 
 file = io.open('test.html', mode='w', encoding="utf-8")
 
 file.write(output)
-
 file.close()
-
-
 # il faudrait aussi ajouter une option pour le nombre d'assistant ++
 # Rajouter des valeurs pour differentes ligne pour l'addresses +++
 # Peut etre faire un array +++
