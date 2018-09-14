@@ -7,44 +7,37 @@ import io
 
 # Set the path to the appropriate URL
 logoAng1 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
-logoAng2 = '523'
+logoAng2 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
 logoFr = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
 logoBil = 'bil'
 lang = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
-# add a variable for path and name
-# add variables for text that is common in all signatures
 
+#Variable for building the block of html
 cssVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif;color:rgb(0,50,78)\">'
 cssVar2 = '</span>'
-#<span lang="FR-CA" style="font-size:8pt;font-family:Verdana,sans-serif"><a href="mailto:{{  emailAdj }} "
-#                                   style="color:purple">{{ emailAdj }}</a></span>
-
 emailVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif\"><a href=\"mailto:\"'
 emailVar2 = '\"style=\"color:purple\">'
 emailVar3 = '</a></span>'
-# add escape char
+#variable for the icon of tel cell fax...
 logoTel = '<span style=\"font-size: 9pt; font-family: Wingdings; color: rgb(0, 50, 78);\">(</span>'
 logoFax = '<span lang=\"FR-CA" style=\"font-size: 9pt; font-family: \'Wingdings 2\'; color: rgb(0, 50, 78);\">6</span>'
 logoCell = '<span lang=\"FR-CA\" style=\"font-size: 9pt; font-family: Webdings; color: rgb(0, 50, 78);\">&Egrave;</span>'
 logoTel2 = logoTel
 logoCell2 = logoCell
-
+#prompt for language
 language = input('Choose between fr, eng or bil :')
 nmbrAsst = input('How many person?     : ')
+
 nmbrAsst = int(nmbrAsst)
 flag = nmbrAsst
-nomConf = input('The name of the person In the conf')
-people = {}
-#templateChoice = input('Assistant? y or n')
 
-#if templateChoice in ['y', 'Y']:
+#path to the HTML for Jinja
 templateModel = 'templateLoop.html'
 
+#List to store the personne object
 myList = []
 
-#else:
-#   templateModel = 'template.html'
-
+#logic to give the good logo 
 if language in ['fr', 'Fr', 'fR', 'FR']:
     lang = logoFr
 
@@ -54,6 +47,7 @@ elif language in ['ang', 'ANG', 'Ang']:
 elif language in ['bil', 'BIL', 'Bil']:
     lang = logoBil
 
+#defining a personne class for all the rep that will go in myList[]
 class personne:
     def __init__(self, nom, titre, titre2, tel, fax, cell, email):
         self.nom = nom
@@ -66,26 +60,22 @@ class personne:
 
     def __str__(self):
         return str(self.__class__) + ": " + str(self.__dict__)
-
-
-
-    
-
-
+#Getting information about every representant
 for i in range(0, nmbrAsst):
     
-    nom = input('name of the Person :')
+    nom = input('name of the Person : ')
     titre = input('title of the person : ')
-    titre2 = input('second title of the Person :')
-    tel = input('telephone number of the Person :')
+    titre2 = input('second title of the Person : ')
+    tel = input('telephone number of the Person : ')
     fax = input('fax number of the Person : ')
     cell = input('cell number of the Person : ')
     email = input('email of the Person : ')
-
+    nomConf = nom
     nom = '<b>' + cssVar + nom + cssVar2 + '</b>' + '<br>'
     titre = cssVar + titre + cssVar2 + '<br>'
     email = emailVar + email + emailVar2 + email + emailVar3 + '<br>' + '<br>'
     
+    #building the string for the HTML block
     if titre2 == '':
         titre2 = ''  
     else:
@@ -107,25 +97,13 @@ for i in range(0, nmbrAsst):
         cell = logoCell + cssVar + cell + cssVar2 + '<br>'
 
     tempPerson = personne(nom, titre, titre2, tel, fax, cell, email)
-
     myList.insert(i,tempPerson)
 
-
-   
-
-
     nmbrAsst = nmbrAsst - 1 
-    #inst = {'nom' : nom, 'titre' : titre, 'titre2' : titre2,'tel' : tel, 'fax' : fax, 'cell' : cell, 'email' : email}
+    
 
 htmlMaster = ''
 for y in myList:
-    #dataList.insert(myList[y].nom)
-    #dataList.insert(myList[y].titre)
-    #dataList.insert(myList[y].titre2)
-    #dataList.insert(myList[y].tel)
-    #dataList.insert(myList[y].fax)
-    #dataList.insert(myList[y].cell)
-    #dataList.insert(myList[y].email)
     htmlBlock = ''
     htmlBlock = y.nom
     htmlBlock = htmlBlock + y.titre
@@ -135,44 +113,13 @@ for y in myList:
     htmlBlock = htmlBlock + y.cell
     htmlBlock = htmlBlock + y.email
     htmlMaster = htmlMaster +htmlBlock
+#### Print the values and format for the block of html
 
-#### if else statement pour savoir si il faut print la ligne ou pas.. Un peu cabochon
-
-
-#if telAdj == '':
-#    telAdj = ''
-#else:
-#    telAdj = logoTel + cssVar + telAdj + cssVar2 + '<br>'
-#
-#if celAdj == '':
-#    celAdj = ''
-#else:
-#    celAdj = logoCell + cssVar + celAdj + cssVar2 + '<br>'
-
-#nom = input('name of the Person :')
-#titre = input('title of the person : ')
-# make this null if nothing is entered
-#titre2 = input('second title of the Person :')
-#tel = input('telephone number of the Person :')
-# we might not need it, so if it's not used, don't output it
-#fax = input('fax number of the Person : ')
-#cell = input('cell number of the Person : ')
-#email = input('email of the Person : ')
-#nom2 = input('name of the second person  :')
-#titreAdj = input('title of person 2 :')
-#telAdj = input('telephone of the second person :')
-#celAdj = input('cell of the second person :  ')
-#emailAdj = input('email of the second person :')
-address = input('Copy paste the address')
-address2 = input('second line of address')
-address3 = input('third')
-address4 = input('fourth')
-
-#tel = logoTel + cssVar + tel + cssVar2 + '<br>'
-#fax = logoFax + cssVar + fax + cssVar2 + '<br>'
-#cell = logoCell + cssVar + cell + cssVar2 + '<br>'
-def get_myList(self):
-    return myList
+#this is a tricky one, the address is variable, sometime 3, 4, 5 line
+address = input('Copy paste the address : ')
+address2 = input('second line of address : ')
+address3 = input('third : ')
+address4 = input('fourth : ')
 
 file_loader = FileSystemLoader('template')
 env = Environment(loader=file_loader)
@@ -182,14 +129,8 @@ output = template.render(nom=nom, titre=titre, titre2=titre2, tel=tel,
                          logoTel=logoTel, logoTel2=logoTel2, logoFax=logoFax, logoCell=logoCell,
                          logoCell2=logoCell2,nomConf=nomConf,flag=flag, htmlMaster = htmlMaster, address2=address2,address3=address3,address4=address4)
 
-
-
-
 file = io.open('test.html', mode='w', encoding="utf-8")
 
 file.write(output)
 file.close()
-# il faudrait aussi ajouter une option pour le nombre d'assistant ++
-# Rajouter des valeurs pour differentes ligne pour l'addresses +++
-# Peut etre faire un array +++
-# si il y a des accents les changer pour leur symbole en html ++++
+
