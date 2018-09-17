@@ -6,16 +6,16 @@ import io
 #Author : DPoirier
 
 # Set the path to the appropriate URL
-logoAng1 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
-logoAng2 = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
+logoAng1 = 'https://www.google.com/a/cpanel/nbifirm.com/images/logo.gif'
+logoAng2 = ''
 logoFr = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
-logoBil = 'bil'
+logoBil = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
 lang = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
 
 #Variable for building the block of html
 cssVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif;color:rgb(0,50,78)\">'
 cssVar2 = '</span>'
-emailVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif\"><a href=\"mailto:\"'
+emailVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif\"><a href=\"mailto:'
 emailVar2 = '\"style=\"color:purple\">'
 emailVar3 = '</a></span>'
 #variable for the icon of tel cell fax...
@@ -41,7 +41,7 @@ myList = []
 if language in ['fr', 'Fr', 'fR', 'FR']:
     lang = logoFr
 
-elif language in ['ang', 'ANG', 'Ang']:
+elif language in ['ang', 'ANG', 'Ang', 'eng', 'ENG', 'Eng']:
     lang = logoAng1
 
 elif language in ['bil', 'BIL', 'Bil']:
@@ -121,6 +121,7 @@ address2 = input('second line of address : ')
 address3 = input('third : ')
 address4 = input('fourth : ')
 
+#render to html
 file_loader = FileSystemLoader('template')
 env = Environment(loader=file_loader)
 template = env.get_template(templateModel)
@@ -128,9 +129,8 @@ output = template.render(nom=nom, titre=titre, titre2=titre2, tel=tel,
                          fax=fax, cell=cell, email=email,address=address, lang=lang,
                          logoTel=logoTel, logoTel2=logoTel2, logoFax=logoFax, logoCell=logoCell,
                          logoCell2=logoCell2,nomConf=nomConf,flag=flag, htmlMaster = htmlMaster, address2=address2,address3=address3,address4=address4)
-
+#write 
 file = io.open('test.html', mode='w', encoding="utf-8")
-
 file.write(output)
 file.close()
 
