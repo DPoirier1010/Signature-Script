@@ -6,11 +6,11 @@ import io
 #Author : DPoirier
 
 # Set the path to the appropriate URL
-logoAng1 = 'https://www.google.com/a/cpanel/nbifirm.com/images/logo.gif'
+logoAng1 = 'http://pngimg.com/download/19642'
 logoAng2 = ''
-logoFr = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
-logoBil = 'https://cabnimage.blob.core.windows.net/publiclogo/logocorpoBC.gif'
-lang = 'https://s3.amazonaws.com/www.cabn.net/logo.gif'
+logoFr = 'http://pngimg.com/download/19642'
+logoBil = 'http://pngimg.com/download/19642'
+lang = 'http://pngimg.com/download/19642'
 
 #Variable for building the block of html
 cssVar = '<span lang=\"FR-CA\" style=\"font-size:8pt;font-family:Verdana,sans-serif;color:rgb(0,50,78)\">'
